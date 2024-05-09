@@ -1,10 +1,17 @@
-function minimumTotal(triangle) {
-  const n = triangle.length;
-  const dp = new Array(n + 1).fill(0);
-  for (let i = n - 1; i >= 0; i--) {
-    for (let j = 0; j <= i; j++) {
-      dp[j] = triangle[i][j] + Math.min(dp[j], dp[j + 1]);
+function levelOrderBottom(root) {
+  if (!root) return [];
+  const result = [];
+  const queue = [root];
+  while (queue.length) {
+    const levelSize = queue.length;
+    const currentLevel = [];
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift();
+      currentLevel.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
     }
+    result.unshift(currentLevel);
   }
-  return dp[0];
+  return result;
 }
